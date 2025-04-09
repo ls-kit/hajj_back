@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class HajjStep extends Model
+class HajjStep extends Model implements HasMedia
 {
-    protected $fillable = [
-        'title',
-        'description',
-    ];
+    use HasFactory, InteractsWithMedia;
+
+    protected $fillable = ['step_number', 'title_bn', 'description_bn', 'image'];
 }

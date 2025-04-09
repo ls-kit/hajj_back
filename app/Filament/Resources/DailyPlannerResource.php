@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\HajjStepResource\Pages;
-use App\Filament\Resources\HajjStepResource\RelationManagers;
-use App\Models\HajjStep;
+use App\Filament\Resources\DailyPlannerResource\Pages;
+use App\Filament\Resources\DailyPlannerResource\RelationManagers;
+use App\Models\DailyPlanner;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,17 +13,17 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class HajjStepResource extends Resource
+class DailyPlannerResource extends Resource
 {
-    protected static ?string $model = HajjStep::class;
+    protected static ?string $model = DailyPlanner::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
 {
     return $form->schema([
-        Forms\Components\TextInput::make('step_number')
-            ->label('Step Number')
+        Forms\Components\TextInput::make('day_number')
+            ->label('Day Number')
             ->required()
             ->numeric(),
 
@@ -31,14 +31,9 @@ class HajjStepResource extends Resource
             ->label('Title (Bangla)')
             ->required(),
 
-        Forms\Components\Textarea::make('description_bn')
-            ->label('Description (Bangla)')
+        Forms\Components\Textarea::make('details_bn')
+            ->label('Details (Bangla)')
             ->required(),
-
-        Forms\Components\FileUpload::make('image')
-            ->image()
-            ->label('Step Image')
-            ->directory('hajj-steps'), // saves in storage/app/public/hajj-steps
     ]);
 }
 
@@ -47,9 +42,9 @@ public static function table(Table $table): Table
 {
     return $table
         ->columns([
-            Tables\Columns\TextColumn::make('step_number'),
+            Tables\Columns\TextColumn::make('day_number')->sortable(),
             Tables\Columns\TextColumn::make('title_bn')->label('Title'),
-            Tables\Columns\TextColumn::make('created_at')->dateTime('d M Y'),
+            Tables\Columns\TextColumn::make('created_at')->date('d M Y'),
         ])
         ->filters([])
         ->actions([
@@ -71,9 +66,9 @@ public static function table(Table $table): Table
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListHajjSteps::route('/'),
-            'create' => Pages\CreateHajjStep::route('/create'),
-            'edit' => Pages\EditHajjStep::route('/{record}/edit'),
+            'index' => Pages\ListDailyPlanners::route('/'),
+            'create' => Pages\CreateDailyPlanner::route('/create'),
+            'edit' => Pages\EditDailyPlanner::route('/{record}/edit'),
         ];
     }
 }
