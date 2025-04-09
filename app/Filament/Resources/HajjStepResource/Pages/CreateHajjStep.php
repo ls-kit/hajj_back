@@ -10,5 +10,4 @@ class CreateHajjStep extends CreateRecord
 {
     protected static string $resource = HajjStepResource::class;
 
-    
 }
